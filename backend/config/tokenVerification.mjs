@@ -12,7 +12,7 @@ const tokenVerification = (req, res, next) => {
              next();
             }else{
                 res.status(401).send({status:401, message:"Unauthorized Token"});
-            }
+            }0
         } else{
             res.status(401).send({status:401, message:"Unauthorized Access"});
         }
