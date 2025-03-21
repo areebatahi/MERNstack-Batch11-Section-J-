@@ -6,6 +6,8 @@ import { useDispatch } from 'react-redux';
 import { loginSuccess } from '../store/authSlice';
 
 const Login = () => {
+	const token = localStorage.getItem("token");
+	const userId = localStorage.getItem("userId");
 	const [formData, setFormData] = useState({
 		email: '',
 		password: '',
@@ -39,8 +41,8 @@ const Login = () => {
 			const data = await response.json();
 			setLoading(false);
 			if (response.ok) {
-				localStorage.setItem("token",data.token)
-				localStorage.setItem("userId",data.user._id)
+				localStorage.getItem('token')
+				localStorage.getItem("userId")
 				dispatch(loginSuccess({
 					token:data.token,
 					userId:data.userId

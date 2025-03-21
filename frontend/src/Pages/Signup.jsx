@@ -4,6 +4,10 @@ import { toast } from "react-toastify";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import * as Yup from "yup";
+import { useDispatch } from 'react-redux';
+import { loginSuccess } from '../store/authSlice';
+
+
 
 // Validation Schema (Same as Backend Joi)
 const validationSchema = Yup.object({
@@ -31,6 +35,8 @@ const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+	const dispatch = useDispatch()
+
 
   return (
     <div className="flex justify-center items-center min-h-screen px-4">
@@ -57,8 +63,15 @@ const Signup = () => {
               console.log("Response:", response,"data", data);
               
               if (response.ok) {
+                localStorage.setItem("token",data.token)
+                localStorage.setItem("userId",data.user._id)
+                dispatch(loginSuccess({
+                  token:data.token,
+                  userId:data.userId
+                }))
                 toast.success(data.message);
-                navigate("/");
+        
+                navigate('/')
               }else{
                 toast.error(data.message || "An error occurred while signing up");}
             } catch (error) {
